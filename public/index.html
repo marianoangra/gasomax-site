@@ -164,7 +164,7 @@ footer{background:var(--soft);color:var(--mut);font-size:13px;padding:28px 0}
 </section>
 
 <footer><div class="w"><p class="legal"><a href="termos.html">Termos da encomenda</a><a href="privacidade.html">Política de privacidade</a></p>© Gasomax. CNB MOBILE LTDA - ME, CNPJ 64.471.793/0001-00. São Paulo - SP.<br><a href="mailto:contato@gasomax.com.br" style="color:inherit">contato@gasomax.com.br</a> · <a href="https://wa.me/5511959278919" style="color:inherit">WhatsApp +55 (11) 95927-8919</a></div></footer>
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+<script src="https://js.hcaptcha.com/1/api.js?render=explicit&hl=pt" async defer></script>
 
 <script>
 const $=s=>document.querySelector(s),f=$('#f'),TIERS=[[100,100],[500,190],[Infinity,350]];
@@ -186,7 +186,7 @@ fetch('/api/status').then(r=>r.json()).then(s=>{
   $('#status').textContent=s.restantesNoLote!==null?`Agora: ${brl(s.precoAtual)}. Restam ${s.restantesNoLote} peças neste lote.`:`Agora: ${brl(s.precoAtual)}.`;
   render();
   if(s.modo==='sandbox')$('#teste').hidden=false;
-  if(s.turnstileSiteKey){const t=setInterval(()=>{if(window.turnstile){clearInterval(t);window.turnstile.render('#cf',{sitekey:s.turnstileSiteKey,theme:'light',language:'pt-br'})}},200)}
+  if(s.captchaSiteKey){const t=setInterval(()=>{if(window.hcaptcha){clearInterval(t);window.hcaptcha.render('cf',{sitekey:s.captchaSiteKey,theme:'light'})}},200)}
 }).catch(()=>{$('#status').textContent='R$ 100 nas primeiras 100 peças, R$ 190 até a 500 e R$ 350 depois.';render()});
 f.cep.addEventListener('blur',async()=>{
   const c=f.cep.value.replace(/\D/g,'');if(c.length!==8)return;
@@ -197,14 +197,14 @@ f.onsubmit=async e=>{
   e.preventDefault();const m=$('#msg');m.textContent='';
   const bad=[...f.elements].find(el=>el.required&&!(el.type==='checkbox'?el.checked:el.value.trim()));
   if(bad){bad.focus();m.textContent=bad.type==='checkbox'?'Confirme que entendeu as condições da encomenda.':'Preencha este campo para continuar.';return}
-  if(!f.querySelector('[name="cf-turnstile-response"]')?.value){m.textContent='Confirme que você não é um robô para continuar.';return}
+  if(!f.querySelector('[name="h-captcha-response"]')?.value){m.textContent='Confirme que você não é um robô para continuar.';return}
   const b=$('#go');b.disabled=true;b.textContent='Gerando o pagamento';
   try{
     const body=Object.fromEntries(new FormData(f));body.qtd=1;
     const r=await fetch('/api/pedido',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
     const j=await r.json();if(!r.ok)throw new Error(j.erro);
     location.href=j.pagamento;
-  }catch(err){m.textContent=(err.message||'Não foi possível criar o pedido.')+' Tente novamente.';b.disabled=false;b.textContent='Ir para o pagamento';try{window.turnstile.reset()}catch{}}
+  }catch(err){m.textContent=(err.message||'Não foi possível criar o pedido.')+' Tente novamente.';b.disabled=false;b.textContent='Ir para o pagamento';try{window.hcaptcha.reset()}catch{}}
 };
 </script>
 </body>
