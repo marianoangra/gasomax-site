@@ -3,8 +3,8 @@ import { Redis } from '@upstash/redis';
 export const redis = Redis.fromEnv({ automaticDeserialization: false });
 export const CONTADOR = 'gasomax:vendidas';
 
-// Peças 1-100 = R$100, 101-500 = R$150, 501+ = R$250 (frete incluso para todo o Brasil)
-export const TIERS = [{ ate: 100, preco: 100 }, { ate: 500, preco: 150 }, { ate: Infinity, preco: 250 }];
+// Peças 1-100 = R$100, 101-500 = R$190, 501+ = R$350 (frete incluso para todo o Brasil)
+export const TIERS = [{ ate: 100, preco: 100 }, { ate: 500, preco: 190 }, { ate: Infinity, preco: 350 }];
 export const HOLD_DIAS = 3;
 export const MAX_POR_CPF = 5; // encomendas ativas (pendentes ou pagas) por CPF
 
