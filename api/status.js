@@ -8,6 +8,6 @@ export default async function handler(_req, res) {
   res.setHeader('Cache-Control', 's-maxage=10, stale-while-revalidate=30');
   res.json({
     vendidas: v, precoAtual: t.preco, restantesNoLote: t.ate === Infinity ? null : t.ate - v,
-    modo, turnstileSiteKey: process.env.TURNSTILE_SITE_KEY || null
+    modo, captchaSiteKey: process.env.HCAPTCHA_SITE_KEY || null
   });
 }

@@ -13,7 +13,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ erro: 'Preencha todos os campos obrigatórios, incluindo marca, modelo e ano do veículo (CPF e CEP válidos).' });
 
     const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
-    if (!(await verificaCaptcha(b['cf-turnstile-response'], ip)))
+    if (!(await verificaCaptcha(b['h-captcha-response'], ip)))
       return res.status(400).json({ erro: 'Não foi possível confirmar que você não é um robô. Tente de novo.' });
 
     // Limite de encomendas ativas por CPF (INCR atômico)

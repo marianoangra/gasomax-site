@@ -34,15 +34,18 @@ export async function asaas(path, body) {
   return j;
 }
 
-// Captcha Cloudflare Turnstile
+// Captcha hCaptcha
 export async function verificaCaptcha(token, ip) {
-  const secret = process.env.TURNSTILE_SECRET_KEY;
+  const secret = process.env.HCAPTCHA_SECRET;
   if (!secret) throw new Error('Captcha não configurado.');
   if (!token) return false;
-  const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+  const p = new URLSearchParams({ secret, response: token });
+  if (ip) p.set('remoteip', ip);
+  if (process.env.HCAPTCHA_SITE_KEY) p.set('sitekey', process.env.HCAPTCHA_SITE_KEY);
+  const r = await fetch('https://api.hcaptcha.com/siteverify', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ secret, response: token, remoteip: ip || undefined })
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: p
   });
   const j = await r.json();
   return j.success === true;
