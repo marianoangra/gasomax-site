@@ -11,7 +11,7 @@ export default async function handler(req, res) {
       const key = `pedido:${id}`;
       const p = await redis.hgetall(key);
       if (p?.status === 'cancelado' || p?.status === 'expirado') { // pagou depois de liberada a vaga
-        await redis.incrby('gasomax:vendidas', Number(p.qtd) || 1);
+        if (!p.cupom) await redis.incrby('gasomax:vendidas', Number(p.qtd) || 1);
         if (p.cpf) await redis.incr(`cpf:${p.cpf}`);
       }
       await redis.hset(key, { status: 'pago', pago_em: new Date().toISOString() });
