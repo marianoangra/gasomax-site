@@ -14,7 +14,7 @@ export function calcula(antes, qtd) {
   return total;
 }
 
-const BASE = process.env.ASAAS_ENV === 'producao' ? 'https://api.asaas.com/v3' : 'https://sandbox.asaas.com/api/v3';
+const BASE = process.env.ASAAS_ENV === 'producao' ? 'https://api.asaas.com/v3' : 'https://api-sandbox.asaas.com/v3';
 export async function asaas(path, body) {
   const r = await fetch(BASE + path, {
     method: 'POST',
