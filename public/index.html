@@ -69,9 +69,10 @@ footer{background:var(--soft);color:var(--mut);font-size:13px;padding:28px 0}
 @media(max-width:820px){nav a.l{display:none}.feat{grid-template-columns:1fr 1fr;gap:36px}.split{grid-template-columns:1fr;gap:32px}.cols{grid-template-columns:1fr}.col{border-left:0;border-top:1px solid var(--line)}.col:first-child{border-top:0}.tile{border-radius:20px;aspect-ratio:4/3;margin-left:12px;margin-right:12px;width:auto}.s2,.s3,.s4{grid-column:span 6}.s2.c{grid-column:span 3}}
 @media(max-width:520px){.feat{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
-</style>
+#teste{background:#ffd60a;color:#1d1d1f;text-align:center;font-size:14px;font-weight:500;padding:8px 12px}#teste[hidden]{display:none}#cf{grid-column:1/-1;min-height:0}.note{text-align:center;color:var(--mut);font-size:17px;margin:20px 0 0}.legal{color:var(--mut);font-size:13px}.legal a{color:var(--mut);text-decoration:underline;margin-right:14px}</style>
 </head>
 <body>
+<div id="teste" hidden>Modo de teste: nenhum pagamento deste site é real.</div>
 <nav><div><b>Gasomax</b><a class="l" href="#produto">Produto</a><a class="l" href="#precos">Preços</a><a class="l" href="#duvidas">Dúvidas</a><a class="pill" href="#encomendar">Encomendar</a></div></nav>
 
 <header class="hero w">
@@ -114,10 +115,11 @@ footer{background:var(--soft);color:var(--mut);font-size:13px;padding:28px 0}
     <div class="col" id="t2"><small>Da peça 101 à 500</small><b>R$ 150</b><span>Pré-venda</span><div class="bar"><i id="b2"></i></div></div>
     <div class="col" id="t3"><small>A partir da peça 501</small><b>R$ 250</b><span>Preço sugerido</span></div>
   </div>
+<p class="note">O preço já inclui o frete para todo o Brasil.</p>
 </section>
 
 <section class="order w" id="encomendar">
-  <div class="head"><h2 class="big">Encomende a sua.</h2><p>Envio em até 45 dias úteis após a confirmação do pagamento. Pague com PIX, boleto ou cartão.</p></div>
+  <div class="head"><h2 class="big">Encomende a sua.</h2><p>Frete incluso para todo o Brasil. Envio em até 45 dias úteis após a confirmação do pagamento. Pague com PIX, boleto ou cartão.</p></div>
   <form id="f" novalidate>
     <fieldset><legend>Seu carro</legend>
       <p class="hint">Usamos esses dados para fabricar a peça na medida do seu bocal.</p>
@@ -142,16 +144,18 @@ footer{background:var(--soft);color:var(--mut);font-size:13px;padding:28px 0}
       <label class="s3">Cidade<input name="cidade" required></label>
       <label class="s2 c">UF<input name="uf" required maxlength="2" style="text-transform:uppercase"></label>
     </fieldset>
-    <div class="sum"><span>Total</span><b id="tot">R$ 100</b></div>
-    <label class="chk"><input type="checkbox" required id="ok"><span>Entendo que é uma encomenda, produzida sob medida para o veículo informado, com envio em até 45 dias úteis após a confirmação do pagamento.</span></label>
+    <div class="sum"><span>Total, frete incluso</span><b id="tot">R$ 100</b></div>
+    <label class="chk"><input type="checkbox" required id="ok"><span>Li e aceito os <a href="termos.html" target="_blank" rel="noopener">Termos da encomenda</a> e a <a href="privacidade.html" target="_blank" rel="noopener">Política de privacidade</a>. Entendo que é uma encomenda produzida sob medida para o veículo informado, com envio em até 45 dias úteis após a confirmação do pagamento.</span></label>
+    <div id="cf"></div>
     <div id="msg" role="alert"></div>
     <button class="pill" id="go">Ir para o pagamento</button>
   </form>
-  <p style="text-align:center;color:var(--mut);font-size:15px;margin-top:20px">Cada encomenda é de uma peça, para um veículo. Tem uma frota? Escreva para <a href="mailto:contato@gasomax.com.br">contato@gasomax.com.br</a>.</p>
+  <p style="text-align:center;color:var(--mut);font-size:15px;margin-top:20px">Cada encomenda é de uma peça, para um veículo. Tem uma frota? Escreva para <a href="mailto:contato@gasomax.com.br">contato@gasomax.com.br</a> ou chame no <a href="https://wa.me/5511959278919">WhatsApp</a>.</p>
 </section>
 
 <section class="faq" id="duvidas">
   <h2>Dúvidas</h2>
+  <details><summary>Quanto custa o frete?</summary><p>Nada a mais. O frete está incluso no preço, para todo o Brasil.</p></details>
   <details><summary>Quando eu recebo?</summary><p>Em até 45 dias úteis após a confirmação do pagamento, porque cada peça é produzida para o seu veículo.</p></details>
   <details><summary>Serve no meu carro?</summary><p>Informe marca, modelo e ano na encomenda. Fabricamos a peça para o bocal do veículo informado. A aplicação vale para carros de passeio e caminhões.</p></details>
   <details><summary>A Gasomax tem patente?</summary><p>O pedido de patente já foi depositado junto ao INPI.</p></details>
@@ -159,7 +163,8 @@ footer{background:var(--soft);color:var(--mut);font-size:13px;padding:28px 0}
   <details><summary>Como funciona o preço por lote?</summary><p>O valor depende da ordem do seu pedido: R$ 100 para as primeiras 100 peças, R$ 150 até a peça 500 e R$ 250 depois disso. O preço final aparece antes do pagamento.</p></details>
 </section>
 
-<footer><div class="w">© Gasomax. contato@gasomax.com.br</div></footer>
+<footer><div class="w"><p class="legal"><a href="termos.html">Termos da encomenda</a><a href="privacidade.html">Política de privacidade</a></p>© Gasomax. CNB MOBILE LTDA - ME, CNPJ 64.471.793/0001-00. Rua Benedito de Oliveira, 105, Alto da Bela Vista, Cachoeira Paulista - SP, CEP 12630-202.<br><a href="mailto:contato@gasomax.com.br" style="color:inherit">contato@gasomax.com.br</a> · <a href="https://wa.me/5511959278919" style="color:inherit">WhatsApp +55 (11) 95927-8919</a></div></footer>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 
 <script>
 const $=s=>document.querySelector(s),f=$('#f'),TIERS=[[100,100],[500,150],[Infinity,250]];
@@ -180,6 +185,8 @@ fetch('/api/status').then(r=>r.json()).then(s=>{
   vendidas=s.vendidas;
   $('#status').textContent=s.restantesNoLote!==null?`Agora: ${brl(s.precoAtual)}. Restam ${s.restantesNoLote} peças neste lote.`:`Agora: ${brl(s.precoAtual)}.`;
   render();
+  if(s.modo==='sandbox')$('#teste').hidden=false;
+  if(s.turnstileSiteKey){const t=setInterval(()=>{if(window.turnstile){clearInterval(t);window.turnstile.render('#cf',{sitekey:s.turnstileSiteKey,theme:'light',language:'pt-br'})}},200)}
 }).catch(()=>{$('#status').textContent='R$ 100 nas primeiras 100 peças, R$ 150 até a 500 e R$ 250 depois.';render()});
 f.cep.addEventListener('blur',async()=>{
   const c=f.cep.value.replace(/\D/g,'');if(c.length!==8)return;
@@ -190,13 +197,14 @@ f.onsubmit=async e=>{
   e.preventDefault();const m=$('#msg');m.textContent='';
   const bad=[...f.elements].find(el=>el.required&&!(el.type==='checkbox'?el.checked:el.value.trim()));
   if(bad){bad.focus();m.textContent=bad.type==='checkbox'?'Confirme que entendeu as condições da encomenda.':'Preencha este campo para continuar.';return}
+  if(!f.querySelector('[name="cf-turnstile-response"]')?.value){m.textContent='Confirme que você não é um robô para continuar.';return}
   const b=$('#go');b.disabled=true;b.textContent='Gerando o pagamento';
   try{
     const body=Object.fromEntries(new FormData(f));body.qtd=1;
     const r=await fetch('/api/pedido',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
     const j=await r.json();if(!r.ok)throw new Error(j.erro);
     location.href=j.pagamento;
-  }catch(err){m.textContent=(err.message||'Não foi possível criar o pedido.')+' Tente novamente.';b.disabled=false;b.textContent='Ir para o pagamento'}
+  }catch(err){m.textContent=(err.message||'Não foi possível criar o pedido.')+' Tente novamente.';b.disabled=false;b.textContent='Ir para o pagamento';try{window.turnstile.reset()}catch{}}
 };
 </script>
 </body>
