@@ -9,8 +9,8 @@ export default async function handler(req, res) {
     let qtd = Math.min(Math.max(parseInt(b.qtd) || 1, 1), 10);
     const cpf = String(b.cpf || '').replace(/\D/g, '');
     const cep = String(b.cep || '').replace(/\D/g, '');
-    if (!b.marca || !b.modelo || !b.ano || !b.nome || !b.email || cpf.length !== 11 || cep.length !== 8 || !b.rua || !b.numero || !b.cidade || !b.uf)
-      return res.status(400).json({ erro: 'Preencha todos os campos obrigatórios, incluindo marca, modelo e ano do veículo (CPF e CEP válidos).' });
+    if (!['carro', 'moto', 'caminhao'].includes(b.tipo) || !b.marca || !b.modelo || !b.ano || !b.nome || !b.email || cpf.length !== 11 || cep.length !== 8 || !b.rua || !b.numero || !b.cidade || !b.uf)
+      return res.status(400).json({ erro: 'Preencha todos os campos obrigatórios, incluindo tipo, marca, modelo e ano do veículo (CPF e CEP válidos).' });
 
     const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
     if (!(await verificaCaptcha(b['h-captcha-response'], ip)))
@@ -47,7 +47,7 @@ export default async function handler(req, res) {
     id = await redis.incr('gasomax:seq');
     const key = `pedido:${id}`;
     await redis.hset(key, {
-      status: 'pendente', cupom: cup ? cup.codigo : '', criado: new Date().toISOString(), qtd, total,
+      status: 'pendente', tipo: b.tipo, cupom: cup ? cup.codigo : '', criado: new Date().toISOString(), qtd, total,
       marca: String(b.marca).slice(0, 60), modelo: String(b.modelo).slice(0, 80), ano: String(b.ano).slice(0, 9), combustivel: String(b.combustivel || '').slice(0, 20),
       nome: String(b.nome).slice(0, 120), cpf, email: String(b.email).slice(0, 120), telefone: String(b.telefone || '').slice(0, 20),
       endereco: `${b.rua}, ${b.numero} ${b.complemento || ''} - ${b.bairro || ''}, ${b.cidade}/${b.uf}, CEP ${cep}`.slice(0, 250)
@@ -62,7 +62,7 @@ export default async function handler(req, res) {
     const siteUrl = process.env.SITE_URL;
     const pgto = await asaas('/payments', {
       customer: cliente.id, billingType: 'UNDEFINED', value: total, dueDate: venc,
-      description: `Encomenda Gasomax - ${qtd} un. para ${b.marca} ${b.modelo} ${b.ano} (frete incluso, envio em até 45 dias úteis)`.slice(0, 500),
+      description: `Encomenda Gasomax - ${qtd} un. para ${{ carro: 'carro', moto: 'moto', caminhao: 'caminhão' }[b.tipo]} ${b.marca} ${b.modelo} ${b.ano} (frete incluso, envio em até 45 dias úteis)`.slice(0, 500),
       externalReference: String(id),
       callback: process.env.ASAAS_REDIRECT === '1' && siteUrl ? { successUrl: `${siteUrl}/obrigado.html`, autoRedirect: true } : undefined
     });
