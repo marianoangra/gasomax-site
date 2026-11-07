@@ -1,53 +1,23 @@
-import { redis, CONTADOR, HOLD_DIAS, MAX_POR_CPF, calcula, asaas, ambiente, verificaCaptcha, liberaVaga, cupom, MAX_USOS_CUPOM } from './_lib.js';
+import { redis, CONTADOR, HOLD_DIAS, calcula, asaas } from './_lib.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ erro: 'Método não permitido.' });
-  let id, cpfKey, cupomKey, cpfOk = false, reservado = 0;
+  let id, qtd;
   try {
-    ambiente(); // falha cedo se ASAAS_ENV estiver errado
     const b = req.body || {};
-    let qtd = Math.min(Math.max(parseInt(b.qtd) || 1, 1), 10);
+    qtd = Math.min(Math.max(parseInt(b.qtd) || 1, 1), 10);
     const cpf = String(b.cpf || '').replace(/\D/g, '');
     const cep = String(b.cep || '').replace(/\D/g, '');
-    if (!['carro', 'moto', 'caminhao'].includes(b.tipo) || !b.marca || !b.modelo || !b.ano || !b.nome || !b.email || cpf.length !== 11 || cep.length !== 8 || !b.rua || !b.numero || !b.cidade || !b.uf)
-      return res.status(400).json({ erro: 'Preencha todos os campos obrigatórios, incluindo tipo, marca, modelo e ano do veículo (CPF e CEP válidos).' });
-
-    const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
-    if (!(await verificaCaptcha(b['h-captcha-response'], ip)))
-      return res.status(400).json({ erro: 'Não foi possível confirmar que você não é um robô. Tente de novo.' });
-
-    // Cupom (opcional): preço fixo, não ocupa vaga de lote, limitado a MAX_USOS_CUPOM usos
-    const cup = cupom(b.cupom);
-    if (cup === undefined) return res.status(400).json({ erro: 'Cupom inválido.' });
-    if (cup) {
-      qtd = 1;
-      cupomKey = `cupom:${cup.codigo}`;
-      const u = await redis.incr(cupomKey);
-      if (u > MAX_USOS_CUPOM) { await redis.decr(cupomKey); cupomKey = undefined; return res.status(400).json({ erro: 'Cupom esgotado.' }); }
-    }
-
-    // Limite de encomendas ativas por CPF (INCR atômico)
-    cpfKey = `cpf:${cpf}`;
-    const n = await redis.incr(cpfKey);
-    cpfOk = true;
-    if (n > MAX_POR_CPF) {
-      await redis.decr(cpfKey); cpfOk = false;
-      if (cupomKey) { await redis.decr(cupomKey); cupomKey = undefined; }
-      return res.status(429).json({ erro: `Cada CPF pode ter até ${MAX_POR_CPF} encomendas. Para quantidades maiores, fale com a gente.` });
-    }
+    if (!b.marca || !b.modelo || !b.ano || !b.nome || !b.email || cpf.length !== 11 || cep.length !== 8 || !b.rua || !b.numero || !b.cidade || !b.uf)
+      return res.status(400).json({ erro: 'Preencha todos os campos obrigatórios, incluindo marca, modelo e ano do veículo (CPF e CEP válidos).' });
 
     // Reserva atômica: INCRBY garante que dois clientes nunca recebem a mesma posição
-    let total;
-    if (cup) total = cup.valor;
-    else {
-      const novo = await redis.incrby(CONTADOR, qtd);
-      reservado = qtd;
-      total = calcula(novo - qtd, qtd);
-    }
+    const novo = await redis.incrby(CONTADOR, qtd);
+    const total = calcula(novo - qtd, qtd);
     id = await redis.incr('gasomax:seq');
     const key = `pedido:${id}`;
     await redis.hset(key, {
-      status: 'pendente', tipo: b.tipo, cupom: cup ? cup.codigo : '', criado: new Date().toISOString(), qtd, total,
+      status: 'pendente', criado: new Date().toISOString(), qtd, total,
       marca: String(b.marca).slice(0, 60), modelo: String(b.modelo).slice(0, 80), ano: String(b.ano).slice(0, 9), combustivel: String(b.combustivel || '').slice(0, 20),
       nome: String(b.nome).slice(0, 120), cpf, email: String(b.email).slice(0, 120), telefone: String(b.telefone || '').slice(0, 20),
       endereco: `${b.rua}, ${b.numero} ${b.complemento || ''} - ${b.bairro || ''}, ${b.cidade}/${b.uf}, CEP ${cep}`.slice(0, 250)
@@ -62,7 +32,7 @@ export default async function handler(req, res) {
     const siteUrl = process.env.SITE_URL;
     const pgto = await asaas('/payments', {
       customer: cliente.id, billingType: 'UNDEFINED', value: total, dueDate: venc,
-      description: `Encomenda Gasomax - ${qtd} un. para ${{ carro: 'carro', moto: 'moto', caminhao: 'caminhão' }[b.tipo]} ${b.marca} ${b.modelo} ${b.ano} (frete incluso, envio em até 45 dias úteis)`.slice(0, 500),
+      description: `Encomenda Gasomax - ${qtd} un. para ${b.marca} ${b.modelo} ${b.ano} (envio em até 45 dias úteis)`.slice(0, 500),
       externalReference: String(id),
       callback: process.env.ASAAS_REDIRECT === '1' && siteUrl ? { successUrl: `${siteUrl}/obrigado.html`, autoRedirect: true } : undefined
     });
@@ -70,14 +40,7 @@ export default async function handler(req, res) {
     res.json({ ok: true, pedido: id, total, pagamento: pgto.invoiceUrl });
   } catch (e) {
     console.error(e);
-    try {
-      if (id) await liberaVaga(id, 'erro');
-      else {
-        if (reservado) await redis.decrby(CONTADOR, reservado);
-        if (cpfOk) await redis.decr(cpfKey);
-        if (cupomKey) await redis.decr(cupomKey);
-      }
-    } catch {}
+    if (id) await liberaVaga(id, 'erro').catch(() => {});
     res.status(500).json({ erro: e.message || 'Erro ao criar pedido.' });
   }
 }
