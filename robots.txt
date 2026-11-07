@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /obrigado.html
+
+Sitemap: https://www.gasomax.com.br/sitemap.xml
