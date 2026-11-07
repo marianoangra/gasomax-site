@@ -10,7 +10,10 @@ export default async function handler(req, res) {
     if (['PAYMENT_CONFIRMED', 'PAYMENT_RECEIVED'].includes(event)) {
       const key = `pedido:${id}`;
       const p = await redis.hgetall(key);
-      if (p?.status === 'cancelado' || p?.status === 'expirado') await redis.incrby('gasomax:vendidas', Number(p.qtd) || 1); // pagou depois de liberada a vaga
+      if (p?.status === 'cancelado' || p?.status === 'expirado') { // pagou depois de liberada a vaga
+        if (!p.cupom) await redis.incrby('gasomax:vendidas', Number(p.qtd) || 1);
+        if (p.cpf) await redis.incr(`cpf:${p.cpf}`);
+      }
       await redis.hset(key, { status: 'pago', pago_em: new Date().toISOString() });
     } else if (['PAYMENT_OVERDUE', 'PAYMENT_DELETED', 'PAYMENT_REFUNDED'].includes(event)) {
       await liberaVaga(id, 'cancelado');
