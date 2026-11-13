@@ -122,7 +122,7 @@ nav .l{display:none;color:#c6d0d5;font-size:14px;font-weight:500;text-decoration
 .plan.cur{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc),0 24px 48px -28px rgba(0,128,106,.55)}
 .plan.cur:before{content:"Lote atual";position:absolute;top:18px;right:18px;background:rgba(0,128,106,.1);color:var(--acc);font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px}
 .plan.off{opacity:.45}
-.bar{height:6px;border-radius:9px;background:var(--line);overflow:hidden;margin-top:18px}.bar i{display:block;height:100%;width:0;background:var(--acc);transition:width .8s}
+.bar{height:14px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:20px}.bar i{position:relative;display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--acc),var(--g));overflow:hidden;transition:width .8s}.plan.cur .bar{box-shadow:inset 0 0 0 1px rgba(0,128,106,.12)}.plan.cur .bar i:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);transform:translateX(-100%);animation:shine 2.4s ease-in-out infinite}@keyframes shine{to{transform:translateX(100%)}}@media(prefers-reduced-motion:reduce){.plan.cur .bar i:after{animation:none}}.bl{display:flex;justify-content:space-between;gap:8px;margin-top:10px;font-size:14px;font-weight:600;color:var(--mut)}.bl:empty{display:none}.bl b{color:var(--acc);font-weight:700}
 #status{margin-top:16px;font-size:17px;color:var(--mut)}.note{margin-top:18px;color:var(--mut);font-size:15px}
 @media(min-width:900px){.plans{grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}.plan{padding:32px}}
 
@@ -246,8 +246,8 @@ footer .c{display:grid;gap:28px}footer .brand{margin:0 0 12px}footer a{color:#c6
   <h2 class="t rv">Quanto antes, menos você paga.</h2>
   <p id="status">Carregando disponibilidade.</p>
   <div class="plans">
-    <div class="plan rv" id="t1"><small>Primeiras 100 peças</small><div class="p"><em>R$</em><b>100</b></div><span class="d">Preço de lançamento</span><div class="bar"><i id="b1"></i></div></div>
-    <div class="plan rv" id="t2"><small>Da peça 101 à 500</small><div class="p"><em>R$</em><b>190</b></div><span class="d">Pré-venda</span><div class="bar"><i id="b2"></i></div></div>
+    <div class="plan rv" id="t1"><small>Primeiras 100 peças</small><div class="p"><em>R$</em><b>100</b></div><span class="d">Preço de lançamento</span><div class="bar"><i id="b1"></i></div><div class="bl" id="l1"></div></div>
+    <div class="plan rv" id="t2"><small>Da peça 101 à 500</small><div class="p"><em>R$</em><b>190</b></div><span class="d">Pré-venda</span><div class="bar"><i id="b2"></i></div><div class="bl" id="l2"></div></div>
     <div class="plan rv" id="t3"><small>A partir da peça 501</small><div class="p"><em>R$</em><b>350</b></div><span class="d">Preço sugerido</span></div>
   </div>
   <p class="note">O preço já inclui o frete para todo o Brasil.</p>
@@ -313,7 +313,7 @@ footer .c{display:grid;gap:28px}footer .brand{margin:0 0 12px}footer a{color:#c6
 <script src="https://js.hcaptcha.com/1/api.js?render=explicit&hl=pt" async defer></script>
 <script>
 const $=s=>document.querySelector(s),f=$('#f'),TIERS=[[100,100],[500,190],[Infinity,350]];
-let vendidas=0;
+let vendidas=0,ok=false;
 const brl=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',minimumFractionDigits:0});
 const preco=()=>TIERS.find(x=>vendidas+1<=x[0])[1];
 function render(){
@@ -322,11 +322,15 @@ function render(){
   ['#t1','#t2','#t3'].forEach(id=>{$(id).classList.toggle('cur',id===cur);$(id).classList.toggle('off',(id==='#t1'&&vendidas>=100)||(id==='#t2'&&vendidas>=500))});
   $('#b1').style.width=Math.min(vendidas,100)+'%';
   $('#b2').style.width=Math.max(0,Math.min((vendidas-100)/4,100))+'%';
+  if(ok){
+    $('#l1').innerHTML=vendidas>=100?'<span>Esgotado</span>':`<span>${vendidas} de 100 vendidas</span><b>Restam ${100-vendidas}</b>`;
+    $('#l2').innerHTML=vendidas>100&&vendidas<500?`<span>${vendidas-100} de 400 vendidas</span><b>Restam ${500-vendidas}</b>`:vendidas>=500?'<span>Esgotado</span>':'';
+  }
 }
 const ano=$('#ano');ano.add(new Option('Selecione',''));
 for(let a=new Date().getFullYear()+1;a>=1980;a--)ano.add(new Option(a,a));
 fetch('/api/status').then(r=>r.json()).then(s=>{
-  vendidas=s.vendidas;
+  vendidas=s.vendidas;ok=true;
   $('#status').textContent=s.restantesNoLote!==null?`Agora: ${brl(s.precoAtual)}. Restam ${s.restantesNoLote} peças neste lote.`:`Agora: ${brl(s.precoAtual)}.`;
   render();
   if(s.modo==='sandbox')$('#teste').hidden=false;
