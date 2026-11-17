@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gasomax | Válvula que bloqueia o ar no tanque. Carro, moto e caminhão</title>
-<meta name="description" content="Gasomax: válvula mecânica que bloqueia o ar no bico da bomba. Você não paga pelo ar. Feita sob medida para carro, moto ou caminhão. Frete incluso para todo o Brasil. Encomende com preço de lançamento.">
+<title>Gasomax | Válvula que bloqueia o ar no tanque. Carro, moto, caminhão, barco e avião</title>
+<meta name="description" content="Gasomax: válvula mecânica que bloqueia o ar no bico da bomba. Você não paga pelo ar. Feita sob medida para carro, moto, caminhão, embarcação ou aeronave. Frete incluso para todo o Brasil. Encomende com preço de lançamento.">
 <link rel="preload" href="/inter-400.woff" as="font" type="font/woff" crossorigin>
 <link rel="preload" href="/inter-700.woff" as="font" type="font/woff" crossorigin>
 <link rel="canonical" href="https://www.gasomax.com.br/">
@@ -19,22 +19,22 @@
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Gasomax">
 <meta property="og:title" content="Gasomax. Só entra combustível.">
-<meta property="og:description" content="Válvula mecânica que bloqueia o ar no bico da bomba. Você não paga pelo ar. Sob medida para carro, moto e caminhão. Frete incluso.">
+<meta property="og:description" content="Válvula mecânica que bloqueia o ar no bico da bomba. Você não paga pelo ar. Sob medida para carro, moto, caminhão, embarcação e aeronave. Frete incluso.">
 <meta property="og:url" content="https://www.gasomax.com.br/">
 <meta property="og:image" content="https://www.gasomax.com.br/img/og-v2.jpg">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Gasomax. Só entra combustível.">
-<meta name="twitter:description" content="Válvula mecânica que bloqueia o ar no bico da bomba. Você não paga pelo ar. Sob medida para carro, moto e caminhão.">
+<meta name="twitter:description" content="Válvula mecânica que bloqueia o ar no bico da bomba. Você não paga pelo ar. Sob medida para carro, moto, caminhão, embarcação e aeronave.">
 <meta name="twitter:image" content="https://www.gasomax.com.br/img/og-v2.jpg">
 <script>document.documentElement.classList.add('js')</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[
-{"@type":"Product","name":"Gasomax","description":"Válvula mecânica que bloqueia o ar no bico da bomba. Você não paga pelo ar. Feita sob medida para carro, moto ou caminhão.","image":"https://www.gasomax.com.br/img/og-v2.jpg","brand":{"@type":"Brand","name":"Gasomax"},"offers":{"@type":"AggregateOffer","priceCurrency":"BRL","lowPrice":"100","highPrice":"350","offerCount":"3","availability":"https://schema.org/PreOrder","url":"https://www.gasomax.com.br/"}},
+{"@type":"Product","name":"Gasomax","description":"Válvula mecânica que bloqueia o ar no bico da bomba. Você não paga pelo ar. Feita sob medida para carro, moto, caminhão, embarcação ou aeronave.","image":"https://www.gasomax.com.br/img/og-v2.jpg","brand":{"@type":"Brand","name":"Gasomax"},"offers":{"@type":"AggregateOffer","priceCurrency":"BRL","lowPrice":"100","highPrice":"350","offerCount":"3","availability":"https://schema.org/PreOrder","url":"https://www.gasomax.com.br/"}},
 {"@type":"Organization","name":"Gasomax","legalName":"CNB MOBILE LTDA - ME","url":"https://www.gasomax.com.br/","logo":"https://www.gasomax.com.br/icon-512.png","email":"contato@gasomax.com.br"},
 {"@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"Quanto custa o frete?","acceptedAnswer":{"@type":"Answer","text":"Nada a mais. O frete está incluso no preço, para todo o Brasil."}},
 {"@type":"Question","name":"Quando eu recebo?","acceptedAnswer":{"@type":"Answer","text":"Em até 45 dias úteis após a confirmação do pagamento, porque cada peça é produzida para o seu veículo."}},
-{"@type":"Question","name":"Serve no meu veículo?","acceptedAnswer":{"@type":"Answer","text":"Informe o tipo (carro, moto ou caminhão), a marca, o modelo e o ano na encomenda. Fabricamos a peça para o veículo informado."}},
+{"@type":"Question","name":"Serve no meu veículo?","acceptedAnswer":{"@type":"Answer","text":"Informe o tipo (carro, moto, caminhão, embarcação ou aeronave), a marca, o modelo e o ano na encomenda. Fabricamos a peça para o veículo informado."}},
 {"@type":"Question","name":"A Gasomax tem patente?","acceptedAnswer":{"@type":"Answer","text":"O pedido de patente já foi depositado junto ao INPI."}}]}]}</script>
 <style>
 @font-face{font-family:Inter;font-weight:400;font-style:normal;font-display:swap;src:url(/inter-400.woff) format("woff")}
@@ -96,11 +96,12 @@ nav .l{display:none;color:#c6d0d5;font-size:14px;font-weight:500;text-decoration
 
 /* VEÍCULOS */
 .kinds{text-align:center}.kinds .lede{margin-left:auto;margin-right:auto}
-.kgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:32px}
+.kgrid{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:32px}.kgrid .k{flex:0 0 calc((100% - 20px)/3)}
 .k{background:var(--soft);border:1px solid var(--line);border-radius:20px;padding:22px 8px;transition:transform .3s,box-shadow .3s}
 .k:hover{transform:translateY(-4px);box-shadow:0 20px 36px -22px rgba(10,20,25,.3)}
 .k svg{width:34px;height:34px;margin:0 auto 12px;color:var(--acc)}.k b{display:block;font-size:16px;letter-spacing:-.02em}.k span{display:none;color:var(--mut);font-size:15px}
-@media(min-width:700px){.kgrid{gap:16px;margin-top:44px}.k{padding:40px 20px}.k svg{width:44px;height:44px}.k b{font-size:24px}.k span{display:block;margin-top:4px}}
+@media(min-width:700px){.kgrid{gap:16px;margin-top:44px}.kgrid .k{flex-basis:calc((100% - 32px)/3)}.k{padding:40px 20px}.k svg{width:44px;height:44px}.k b{font-size:24px}.k span{display:block;margin-top:4px}}
+@media(min-width:1000px){.kgrid .k{flex-basis:calc((100% - 64px)/5);padding:36px 10px}.k b{font-size:21px}.k span{font-size:14px}}
 
 /* ENGENHARIA */
 .dark{background:var(--dk);color:#f3f6f7}.dark .eyebrow{color:var(--g)}.dark .lede{color:var(--dkm)}
@@ -142,6 +143,7 @@ input:focus,select:focus{outline:0;border-color:var(--acc);box-shadow:0 0 0 4px 
 .seg{grid-column:1/-1;display:flex;gap:4px;background:var(--soft);padding:4px;border-radius:14px;border:1px solid var(--line)}
 .seg label{flex:1;grid-column:auto;position:relative;margin:0;font-size:inherit}.seg input{position:absolute;opacity:0;width:1px;height:1px;margin:0;padding:0}
 .seg span{display:block;text-align:center;padding:12px 6px;border-radius:11px;font-size:15.5px;font-weight:600;color:var(--mut);cursor:pointer;transition:background .2s,color .2s,box-shadow .2s}
+@media(max-width:520px){.seg{gap:2px;padding:3px}.seg span{font-size:13px;padding:11px 2px}}
 .seg input:checked+span{background:#fff;color:var(--ink);box-shadow:0 1px 8px rgba(10,20,25,.16)}.seg input:focus-visible+span{outline:3px solid var(--g)}
 .sum{grid-column:1/-1;background:var(--soft);border-radius:16px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:10px}
 .sum span{font-weight:600}.sum small{display:block;color:var(--mut);font-weight:400;font-size:13px}.sum b{font-size:34px;letter-spacing:-.035em}
@@ -190,7 +192,7 @@ footer .c{display:grid;gap:28px}footer .brand{margin:0 0 12px}footer a{color:#c6
     <div>
       <span class="chip"><i></i>Pré-venda aberta</span>
       <h1>Só entra combustível.</h1>
-      <p class="sub">A válvula mecânica que bloqueia o ar no bico da bomba. Você não paga pelo ar. Feita sob medida para carro, moto e caminhão.</p>
+      <p class="sub">A válvula mecânica que bloqueia o ar no bico da bomba. Você não paga pelo ar. Feita sob medida para carro, moto, caminhão, embarcação e aeronave.</p>
       <div class="cta" id="herocta"><a class="btn" href="#encomendar">Encomendar agora</a><a class="btn ghost" href="#video">Ver o vídeo</a></div>
       <ul class="trust"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Frete grátis para todo o Brasil</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Patente depositada no INPI</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Envio em até 45 dias úteis</li></ul>
     </div>
@@ -216,12 +218,14 @@ footer .c{display:grid;gap:28px}footer .brand{margin:0 0 12px}footer a{color:#c6
 
 <section class="kinds" id="veiculos"><div class="c">
   <span class="eyebrow">Para o seu veículo</span>
-  <h2 class="t rv">Carro, moto e caminhão.</h2>
-  <p class="lede rv">Escolha o seu veículo entre as marcas e modelos vendidos no Brasil. Cada peça é feita sob medida.</p>
+  <h2 class="t rv">Na terra, na água e no ar.</h2>
+  <p class="lede rv">Carro, moto, caminhão, embarcação ou aeronave. Cada peça é feita sob medida para o bocal do seu tanque.</p>
   <div class="kgrid">
     <div class="k rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3v-5l2-5a2 2 0 0 1 1.9-1.3h10.2A2 2 0 0 1 19 7l2 5v5h-2"/><path d="M3 12h18"/><circle cx="7.5" cy="17" r="2"/><circle cx="16.5" cy="17" r="2"/><path d="M9.5 17h5"/></svg><b>Carro</b><span>Passeio e aplicativo</span></div>
     <div class="k rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="16.5" r="3.5"/><circle cx="18.5" cy="16.5" r="3.5"/><path d="M5.5 16.5l4-7h5l4 7"/><path d="M14.5 9.5L13 6h-3"/><path d="M9.5 9.5l3 7"/></svg><b>Moto</b><span>Todas as cilindradas</span></div>
     <div class="k rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 17V6a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v11h2"/><path d="M14 17h-4"/><path d="M14 8h4l3 4v5h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg><b>Caminhão</b><span>Frotas e autônomos</span></div>
+    <div class="k rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="M12 4l6 9h-6"/><path d="M3 16h18l-2.5 4h-13z"/></svg><b>Embarcação</b><span>Lanchas, barcos e jet skis</span></div>
+    <div class="k rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg><b>Aeronave</b><span>Experimentais e ultraleves</span></div>
   </div>
 </div></section>
 
@@ -261,12 +265,14 @@ footer .c{display:grid;gap:28px}footer .brand{margin:0 0 12px}footer a{color:#c6
         <label><input type="radio" name="tipo" value="carro" checked><span>Carro</span></label>
         <label><input type="radio" name="tipo" value="moto"><span>Moto</span></label>
         <label><input type="radio" name="tipo" value="caminhao"><span>Caminhão</span></label>
+        <label><input type="radio" name="tipo" value="barco"><span>Barco</span></label>
+        <label><input type="radio" name="tipo" value="aviao"><span>Avião</span></label>
       </div>
       <p class="hint">Escolha na lista ou digite, se não encontrar o seu. Usamos esses dados para fabricar a peça na medida do seu bocal.</p>
       <label class="s3">Marca<input name="marca" list="marcas" required autocomplete="off" placeholder="Escolha ou digite"></label>
       <label class="s3">Modelo<input name="modelo" list="modelos" required autocomplete="off" placeholder="Escolha ou digite"></label>
       <label class="s3 m3">Ano<select name="ano" id="ano" required></select></label>
-      <label class="s3 m3">Combustível<select name="combustivel" required><option value="">Selecione</option><option>Gasolina</option><option>Etanol</option><option>Flex</option><option>Diesel</option></select></label>
+      <label class="s3 m3">Combustível<select name="combustivel" required><option value="">Selecione</option><option>Gasolina</option><option>Etanol</option><option>Flex</option><option>Diesel</option><option>Gasolina de aviação</option></select></label>
       <datalist id="marcas"></datalist><datalist id="modelos"></datalist>
     </fieldset>
     <fieldset><legend><i>2</i>Seus dados</legend>
@@ -298,7 +304,7 @@ footer .c{display:grid;gap:28px}footer .brand{margin:0 0 12px}footer a{color:#c6
   <h2 class="t">Dúvidas</h2>
   <details><summary>Quanto custa o frete?</summary><p>Nada a mais. O frete está incluso no preço, para todo o Brasil.</p></details>
   <details><summary>Quando eu recebo?</summary><p>Em até 45 dias úteis após a confirmação do pagamento, porque cada peça é produzida para o seu veículo.</p></details>
-  <details><summary>Serve no meu veículo?</summary><p>Informe o tipo (carro, moto ou caminhão), a marca, o modelo e o ano na encomenda. Fabricamos a peça para o bocal do veículo informado.</p></details>
+  <details><summary>Serve no meu veículo?</summary><p>Informe o tipo (carro, moto, caminhão, embarcação ou aeronave), a marca, o modelo e o ano na encomenda. Fabricamos a peça para o bocal do veículo informado.</p></details>
   <details><summary>A Gasomax tem patente?</summary><p>O pedido de patente já foi depositado junto ao INPI.</p></details>
   <details><summary>Posso desistir da compra?</summary><p>Sim. Por ser compra à distância, você pode desistir em até 7 dias corridos, conforme o Código de Defesa do Consumidor.</p></details>
   <details><summary>Como funciona o preço por lote?</summary><p>O valor depende da ordem do seu pedido: R$ 100 para as primeiras 100 peças, R$ 190 até a peça 500 e R$ 350 depois disso. O preço final aparece antes do pagamento.</p></details>
@@ -354,6 +360,7 @@ const apiV=async q=>cacheV[q]||(cacheV[q]=await fetch('/api/veiculos?'+q).then(r
 const fillDL=(id,arr)=>{$('#'+id).replaceChildren(...arr.map(v=>{const o=document.createElement('option');o.value=v;return o}))};
 async function carregaMarcas(){
   f.marca.value='';f.modelo.value='';fillDL('marcas',[]);fillDL('modelos',[]);marcasV=[];
+  const fipe=['carro','moto','caminhao'].includes(f.tipo.value);f.marca.placeholder=fipe?'Escolha ou digite':'Digite a marca';f.modelo.placeholder=fipe?'Escolha ou digite':'Digite o modelo';if(!fipe)return;
   try{marcasV=await apiV('tipo='+f.tipo.value);fillDL('marcas',marcasV.map(m=>m.nome))}catch{f.marca.placeholder='Digite a marca'}
 }
 async function carregaModelos(){

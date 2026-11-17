@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     let qtd = Math.min(Math.max(parseInt(b.qtd) || 1, 1), 10);
     const cpf = String(b.cpf || '').replace(/\D/g, '');
     const cep = String(b.cep || '').replace(/\D/g, '');
-    if (!['carro', 'moto', 'caminhao'].includes(b.tipo) || !b.marca || !b.modelo || !b.ano || !b.nome || !b.email || cpf.length !== 11 || cep.length !== 8 || !b.rua || !b.numero || !b.cidade || !b.uf)
+    if (!['carro', 'moto', 'caminhao', 'barco', 'aviao'].includes(b.tipo) || !b.marca || !b.modelo || !b.ano || !b.nome || !b.email || cpf.length !== 11 || cep.length !== 8 || !b.rua || !b.numero || !b.cidade || !b.uf)
       return res.status(400).json({ erro: 'Preencha todos os campos obrigatórios, incluindo tipo, marca, modelo e ano do veículo (CPF e CEP válidos).' });
 
     const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
@@ -62,7 +62,7 @@ export default async function handler(req, res) {
     const siteUrl = process.env.SITE_URL;
     const pgto = await asaas('/payments', {
       customer: cliente.id, billingType: 'UNDEFINED', value: total, dueDate: venc,
-      description: `Encomenda Gasomax - ${qtd} un. para ${{ carro: 'carro', moto: 'moto', caminhao: 'caminhão' }[b.tipo]} ${b.marca} ${b.modelo} ${b.ano} (frete incluso, envio em até 45 dias úteis)`.slice(0, 500),
+      description: `Encomenda Gasomax - ${qtd} un. para ${{ carro: 'carro', moto: 'moto', caminhao: 'caminhão', barco: 'embarcação', aviao: 'aeronave' }[b.tipo]} ${b.marca} ${b.modelo} ${b.ano} (frete incluso, envio em até 45 dias úteis)`.slice(0, 500),
       externalReference: String(id),
       callback: process.env.ASAAS_REDIRECT === '1' && siteUrl ? { successUrl: `${siteUrl}/obrigado.html`, autoRedirect: true } : undefined
     });
